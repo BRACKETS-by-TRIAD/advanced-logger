@@ -1,14 +1,14 @@
 <?php
 
-namespace Brackets\AdvancedLogger;
+namespace Brackets\AdvancedLogger\Loggers;
 
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 /**
- * Class Logger
+ * Class BaseRequestLogger
  */
-class Logger implements LoggerInterface
+class BaseRequestLogger implements LoggerInterface
 {
     /**
      * @var \Monolog\Logger;
@@ -16,12 +16,12 @@ class Logger implements LoggerInterface
     protected $monolog;
 
     /**
-     *
+     * BaseRequestLogger constructor.
      */
     public function __construct()
     {
         $this->monolog = clone app('log')->getMonolog();
-        if (config('advanced-logger.logger.enabled') && $handlers = config('advanced-logger.logger.handlers')) {
+        if (config('advanced-logger.request.enabled') && $handlers = config('advanced-logger.request.handlers')) {
             if (count($handlers)) {
                 //Remove default laravel handler
                 $this->monolog->popHandler();

@@ -6,12 +6,12 @@ use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 
 /**
- * Class AdvancedLoggerHandler
+ * Class RequestLoggerHandler
  */
-class AdvancedLoggerHandler extends RotatingFileHandler
+class RequestLoggerHandler extends RotatingFileHandler
 {
     /**
-     * AdvancedLoggerHandler constructor.
+     * RequestLoggerHandler constructor.
      *
      * @param null $filename
      * @param int $maxFiles
@@ -28,7 +28,7 @@ class AdvancedLoggerHandler extends RotatingFileHandler
         $filePermission = null,
         $useLocking = false
     ) {
-        $filename = !is_null($filename) ? $filename : config('advanced-logger.logger.file',
+        $filename = !is_null($filename) ? $filename : config('advanced-logger.request-logger.file',
             storage_path('logs/requests.log'));
         parent::__construct($filename, $maxFiles, $level, $bubble, $filePermission, $useLocking);
     }

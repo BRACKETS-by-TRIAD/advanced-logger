@@ -1,13 +1,13 @@
 <?php
 
-namespace Brackets\AdvancedLogger;
+namespace Brackets\AdvancedLogger\Loggers;
 
 use Brackets\AdvancedLogger\Interpolations\RequestInterpolation;
 use Brackets\AdvancedLogger\Interpolations\ResponseInterpolation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AdvancedLogger
+class RequestLogger
 {
     /**
      *
@@ -33,19 +33,19 @@ class AdvancedLogger
      */
     protected $responseInterpolation;
     /**
-     * @var Logger
+     * @var BaseRequestLogger
      */
     protected $logger;
 
     /**
      * AdvancedLogger constructor.
      *
-     * @param Logger $logger
+     * @param BaseRequestLogger $logger
      * @param RequestInterpolation $requestInterpolation
      * @param ResponseInterpolation $responseInterpolation
      */
     public function __construct(
-        Logger $logger,
+        BaseRequestLogger $logger,
         RequestInterpolation $requestInterpolation,
         ResponseInterpolation $responseInterpolation
     ) {
@@ -64,14 +64,14 @@ class AdvancedLogger
 
         $this->responseInterpolation->setResponse($response);
 
-        if (config('advanced-logger.logger.enabled')) {
-            $format = config('advanced-logger.logger.format', 'full');
+        if (config('advanced-logger.request.enabled')) {
+            $format = config('advanced-logger.request.format', 'full');
             $format = array_get($this->formats, $format, $format);
 
             $message = $this->responseInterpolation->interpolate($format);
             $message = $this->requestInterpolation->interpolate($message);
 
-            $this->logger->log(config('advanced-logger.logger.level', 'info'), $message, [
+            $this->logger->log(config('advanced-logger.request.level', 'info'), $message, [
                 static::LOG_CONTEXT
             ]);
         }

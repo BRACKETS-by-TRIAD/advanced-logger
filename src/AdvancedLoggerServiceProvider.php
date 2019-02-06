@@ -2,10 +2,11 @@
 
 namespace Brackets\AdvancedLogger;
 
-use Brackets\AdvancedLogger\Jobs\LogJob;
+use Brackets\AdvancedLogger\Jobs\RequestLogJob;
 use Brackets\AdvancedLogger\Services\Benchmark;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -39,14 +40,7 @@ class AdvancedLoggerServiceProvider extends ServiceProvider
 
         $this->app['events']->listen('kernel.handled', function ($request, $response) {
             Benchmark::end('application');
-            if (!$this->excluded($request)) {
-                $task = app(LogJob::class, ['request' => $request, 'response' => $response]);
-                if (is_null($queueName = config('advanced-logger.queue'))) {
-                    $task->handle();
-                } else {
-                    $this->dispatch(is_string($queueName) ? $task->onQueue($queueName) : $task);
-                }
-            }
+            $this->logRequest($request, $response, $this);
         });
     }
 
@@ -58,7 +52,7 @@ class AdvancedLoggerServiceProvider extends ServiceProvider
      */
     protected function excluded(Request $request): bool
     {
-        $excludedPaths = config('advanced-logger.excluded-paths');
+        $excludedPaths = config('advanced-logger.request.excluded-paths');
         if (null === $excludedPaths || empty($excludedPaths)) {
             return false;
         }
@@ -68,5 +62,22 @@ class AdvancedLoggerServiceProvider extends ServiceProvider
             }
         }
         return false;
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @throws \Exception
+     */
+    private function logRequest(Request $request, Response $response): void
+    {
+        if (!$this->excluded($request)) {
+            $task = app(RequestLogJob::class, ['request' => $request, 'response' => $response]);
+            if (is_null($queueName = config('advanced-logger.request.queue'))) {
+                $task->handle();
+            } else {
+                $this->dispatch(is_string($queueName) ? $task->onQueue($queueName) : $task);
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Brackets\AdvancedLogger\Jobs;
 
-use Brackets\AdvancedLogger\AdvancedLogger;
+use Brackets\AdvancedLogger\Loggers\RequestLogger;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,9 +12,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class LogJob
+ * Class RequestLogJob
  */
-class LogJob implements ShouldQueue
+class RequestLogJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
@@ -27,7 +27,7 @@ class LogJob implements ShouldQueue
     protected $response;
 
     /**
-     * LogJob constructor.
+     * RequestLogJob constructor.
      *
      * @param Request $request
      * @param Response $response
@@ -43,7 +43,7 @@ class LogJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $requestLogger = app(AdvancedLogger::class);
+        $requestLogger = app(RequestLogger::class);
         $requestLogger->log($this->request, $this->response);
     }
 }

@@ -2,7 +2,7 @@
 
 return [
 
-    'request-logger' => [
+    'request' => [
 
         /*
          * Enable or disable request logger
