@@ -32,26 +32,30 @@ class ResponseInterpolation extends BaseInterpolation
      * @param string $variable
      * @return string
      */
-    public function resolveVariable(string $raw, string $variable): string
+    protected function resolveVariable(string $raw, string $variable): string
     {
         $method = str_replace([
             'content',
             'httpVersion',
             'status',
-            'statusCode'
+            'statusCode',
+            'responseTime',
+            'requestHash',
         ], [
             'getContent',
             'getProtocolVersion',
             'getStatusCode',
-            'getStatusCode'
+            'getStatusCode',
+            'getResponseTime',
+            'getRequestHash',
         ], camel_case($variable));
 
-        if (method_exists($this->response, $method)) {
-            return $this->response->$method();
+        if (method_exists($this, $method)) {
+            return $this->convertToString($this->$method());
         }
 
-        if (method_exists($this, $method)) {
-            return $this->$method();
+        if (method_exists($this->response, $method)) {
+            return $this->convertToString($this->response->$method());
         }
 
         $matches = [];
@@ -60,7 +64,7 @@ class ResponseInterpolation extends BaseInterpolation
             [$line, $var, $option] = $matches;
             switch (strtolower($var)) {
                 case 'res':
-                    return $this->response->headers->get($option);
+                    return $this->convertToString($this->response->headers->get($option));
                 default;
                     return $raw;
             }
@@ -73,7 +77,7 @@ class ResponseInterpolation extends BaseInterpolation
      *
      * @return string
      */
-    public function getContentLength(): string
+    protected function getContentLength(): string
     {
         $path = storage_path('framework' . DIRECTORY_SEPARATOR . 'temp');
         if (!file_exists($path) && !mkdir($path, 0777, true) && !is_dir($path)) {
@@ -82,7 +86,12 @@ class ResponseInterpolation extends BaseInterpolation
         $content = $this->response->getContent();
         $file = $path . DIRECTORY_SEPARATOR . 'response-' . time();
         file_put_contents($file, $content);
-        $contentLength = (string)filesize($file);
+        $fileSize = filesize($file);
+        if (is_numeric($fileSize)) {
+            $contentLength = $this->formatSizeUnits($fileSize);
+        } else {
+            $contentLength = $this->formatSizeUnits(0);
+        }
         unlink($file);
         return $contentLength;
     }
@@ -92,10 +101,24 @@ class ResponseInterpolation extends BaseInterpolation
      *
      * @return string|null
      */
-    public function responseTime(): ?string
+    protected function getResponseTime(): ?string
     {
         try {
             return (string)Benchmark::duration('application');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get response time
+     *
+     * @return string|null
+     */
+    protected function getRequestHash(): ?string
+    {
+        try {
+            return Benchmark::hash('application');
         } catch (\Exception $e) {
             return null;
         }

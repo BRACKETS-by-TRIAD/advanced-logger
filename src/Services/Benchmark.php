@@ -2,7 +2,7 @@
 
 namespace Brackets\AdvancedLogger\Services;
 
-use Exception;
+use RuntimeException;
 
 /**
  * Class Benchmark
@@ -15,24 +15,24 @@ class Benchmark
     protected static $timers = [];
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
-    public static function start($name)
+    public static function start(string $name)
     {
         $start = microtime(true);
         static::$timers[$name] = [
-            'start' => $start
+            'hash' => sha1(time()),
+            'start' => $start,
         ];
         return $start;
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return float
-     * @throws Exception
      */
-    public static function end($name): float
+    public static function end(string $name): float
     {
         $end = microtime(true);
         if (isset(static::$timers[$name]) && isset(static::$timers[$name]['start'])) {
@@ -44,16 +44,27 @@ class Benchmark
             static::$timers[$name]['duration'] = $end - $start;
             return static::$timers[$name]['duration'];
         }
-        throw new Exception("Benchmark '{$name}' not started");
+        throw new RuntimeException("Benchmark '{$name}' not started");
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return float
-     * @throws Exception
      */
-    public static function duration($name): float
+    public static function duration(string $name): float
     {
         return static::end($name);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    public static function hash(string $name): string
+    {
+        if (isset(static::$timers[$name]) && isset(static::$timers[$name]['start'])) {
+            return static::$timers[$name]['hash'];
+        }
+        throw new RuntimeException("Benchmark '{$name}' not started");
     }
 }

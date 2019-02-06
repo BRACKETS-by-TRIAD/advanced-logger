@@ -32,7 +32,7 @@ class RequestInterpolation extends BaseInterpolation
      * @param string $variable
      * @return string
      */
-    public function resolveVariable(string $raw, string $variable): string
+    protected function resolveVariable(string $raw, string $variable): string
     {
         $method = str_replace([
             'remoteAddr',
@@ -41,7 +41,9 @@ class RequestInterpolation extends BaseInterpolation
             'queryString',
             'remoteUser',
             'referrer',
-            'body'
+            'body',
+            'query',
+            'user',
         ], [
             'ip',
             'getScheme',
@@ -49,7 +51,9 @@ class RequestInterpolation extends BaseInterpolation
             'getQueryString',
             'getUser',
             'referer',
-            'getContent'
+            'getContent',
+            'getQuery',
+            'getUser',
         ], camel_case($variable));
 
         $serverVariable = str_replace([
@@ -70,12 +74,16 @@ class RequestInterpolation extends BaseInterpolation
             'HTTP_USER_AGENT'
         ], strtoupper(str_replace('-', '_', $variable)));
 
+        if (method_exists($this, $method)) {
+            return $this->convertToString($this->$method());
+        }
+
         if (method_exists($this->request, $method)) {
-            return $this->request->$method();
+            return $this->convertToString($this->request->$method());
         }
 
         if (isset($_SERVER[$serverVariable])) {
-            return $this->request->server($serverVariable);
+            return $this->convertToString($this->request->server($serverVariable));
         }
 
         $matches = [];
@@ -99,13 +107,44 @@ class RequestInterpolation extends BaseInterpolation
                     return $formats[$option] ?? Carbon::now()->format($option);
                 case 'req':
                 case 'header':
-                    return $this->request->header(strtolower($option));
+                    return $this->convertToString($this->request->header(strtolower($option)));
                 case 'server':
-                    return $this->request->server($option);
+                    return $this->convertToString($this->request->server($option));
                 default;
                     return $raw;
             }
         }
         return $raw;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQuery(): string
+    {
+        $query = $this->request->query();
+        $queryString = '[';
+        foreach ($query as $key => $value) {
+            if (is_array($value)) {
+                $queryString .= $key . '=>[],';
+            } else {
+                $queryString .= $key . '=>' . $value . ',';
+            }
+        }
+        $queryString = trim($queryString, ',');
+        $queryString .= ']';
+        return $queryString;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getUser(): string
+    {
+        if (!is_null($this->request->user()) && !is_null($this->request->user()->email)) {
+            return $this->request->user()->email;
+        } else {
+            return null;
+        }
     }
 }

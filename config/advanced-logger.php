@@ -15,7 +15,7 @@ return [
          */
 
         'handlers' => [
-            Brackets\AdvancedLogger\Handlers\AdvancedLoggerHandler::class
+            Brackets\AdvancedLogger\Handlers\RequestLoggerHandler::class
         ],
 
         /*

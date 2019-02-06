@@ -2,79 +2,186 @@
 
 namespace Brackets\AdvancedLogger\Loggers;
 
-use Brackets\AdvancedLogger\Interpolations\RequestInterpolation;
-use Brackets\AdvancedLogger\Interpolations\ResponseInterpolation;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Psr\Log\LoggerInterface;
+use RuntimeException;
 
-class RequestLogger
+/**
+ * Class BaseRequestLogger
+ */
+class RequestLogger implements LoggerInterface
 {
     /**
-     *
+     * @var \Monolog\Logger;
      */
-    protected const LOG_CONTEXT = 'RESPONSE';
-    /**
-     * @var array
-     */
-    protected $formats = [
-        'full' => 'HTTP/{http-version} {status} | {remote-addr} | {user} | {method} {url} {query} | {response-time} ms | {user-agent} | {referer}',
-        'combined' => '{remote-addr} - {remote-user} [{date}] "{method} {url} HTTP/{http-version}" {status} {content-length} "{referer}" "{user-agent}"',
-        'common' => '{remote-addr} - {remote-user} [{date}] "{method} {url} HTTP/{http-version}" {status} {content-length}',
-        'dev' => '{method} {url} {status} {response-time} ms - {content-length}',
-        'short' => '{remote-addr} {remote-user} {method} {url} HTTP/{http-version} {status} {content-length} - {response-time} ms',
-        'tiny' => '{method} {url} {status} {content-length} - {response-time} ms'
-    ];
-    /**
-     * @var RequestInterpolation
-     */
-    protected $requestInterpolation;
-    /**
-     * @var ResponseInterpolation
-     */
-    protected $responseInterpolation;
-    /**
-     * @var BaseRequestLogger
-     */
-    protected $logger;
+    protected $monolog;
 
     /**
-     * AdvancedLogger constructor.
-     *
-     * @param BaseRequestLogger $logger
-     * @param RequestInterpolation $requestInterpolation
-     * @param ResponseInterpolation $responseInterpolation
+     * BaseRequestLogger constructor.
      */
-    public function __construct(
-        BaseRequestLogger $logger,
-        RequestInterpolation $requestInterpolation,
-        ResponseInterpolation $responseInterpolation
-    ) {
-        $this->logger = $logger;
-        $this->requestInterpolation = $requestInterpolation;
-        $this->responseInterpolation = $responseInterpolation;
-    }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     */
-    public function log(Request $request, Response $response): void
+    public function __construct()
     {
-        $this->requestInterpolation->setRequest($request);
+//        $this->monolog = clone app('log')->getMonolog();
+//        if (config('advanced-logger.request.enabled') && $handlers = config('advanced-logger.request.handlers')) {
+//            if (count($handlers)) {
+//                //Remove default laravel handler
+//                $this->monolog->popHandler();
+//                foreach ($handlers as $handler) {
+//                    if (class_exists($handler)) {
+//                        $this->monolog->pushHandler(app($handler));
+//                    } else {
+//                        throw new RuntimeException("Handler class [{$handler}] does not exist");
+//                    }
+//                }
+//            }
+//        }
 
-        $this->responseInterpolation->setResponse($response);
 
-        if (config('advanced-logger.request.enabled')) {
-            $format = config('advanced-logger.request.format', 'full');
-            $format = array_get($this->formats, $format, $format);
-
-            $message = $this->responseInterpolation->interpolate($format);
-            $message = $this->requestInterpolation->interpolate($message);
-
-            $this->logger->log(config('advanced-logger.request.level', 'info'), $message, [
-                static::LOG_CONTEXT
-            ]);
+        $this->monolog = app('log')->driver()->getLogger();
+        if (config('advanced-logger.request.enabled') && $handlers = config('advanced-logger.request.handlers')) {
+            if (count($handlers)) {
+                //Remove default laravel handler
+                $this->monolog->popHandler();
+                foreach ($handlers as $handler) {
+                    if (class_exists($handler)) {
+                        $this->monolog->pushHandler(app($handler));
+                    } else {
+                        throw new RuntimeException("Handler class [{$handler}] does not exist");
+                    }
+                }
+            }
         }
     }
 
+    /**
+     * Log an alert message to the logs.
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
+    public function alert($message, array $context = array())
+    {
+        $this->monolog->alert($message, $context);
+    }
+
+    /**
+     * Log a critical message to the logs.
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
+    public function critical($message, array $context = array())
+    {
+        $this->monolog->critical($message, $context);
+    }
+
+    /**
+     * Log an error message to the logs.
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
+    public function error($message, array $context = array())
+    {
+        $this->monolog->error($message, $context);
+    }
+
+    /**
+     * Log a warning message to the logs.
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
+    public function warning($message, array $context = array())
+    {
+        $this->monolog->warning($message, $context);
+    }
+
+    /**
+     * Log a notice to the logs.
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
+    public function notice($message, array $context = array())
+    {
+        $this->monolog->notice($message, $context);
+    }
+
+    /**
+     * Log an informational message to the logs.
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
+    public function info($message, array $context = array())
+    {
+        $this->monolog->info($message, $context);
+    }
+
+    /**
+     * Log a debug message to the logs.
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
+    public function debug($message, array $context = array())
+    {
+        $this->monolog->debug($message, $context);
+    }
+
+
+    /**
+     * System is unusable.
+     *
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function emergency($message, array $context = array())
+    {
+        $this->monolog->emergency($message, $context);
+    }
+
+    /**
+     * Log a message to the logs.
+     *
+     * @param  string $level
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
+    public function log($level, $message, array $context = array())
+    {
+        $this->monolog->log($level, $message, $context);
+    }
+
+    /**
+     * Register a file log handler.
+     *
+     * @param  string $path
+     * @param  string $level
+     * @return void
+     */
+    public function useFiles($path, $level = 'debug')
+    {
+    }
+
+    /**
+     * Register a daily file log handler.
+     *
+     * @param  string $path
+     * @param  int $days
+     * @param  string $level
+     * @return void
+     */
+    public function useDailyFiles($path, $days = 0, $level = 'debug')
+    {
+    }
 }
