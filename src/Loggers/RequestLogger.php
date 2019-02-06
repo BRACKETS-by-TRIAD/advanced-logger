@@ -27,7 +27,6 @@ class RequestLogger implements LoggerInterface
         }
         if (config('advanced-logger.request.enabled') && $handlers = config('advanced-logger.request.handlers')) {
             if (count($handlers)) {
-                //Remove default laravel handler
                 $this->monolog->popHandler();
                 foreach ($handlers as $handler) {
                     if (class_exists($handler)) {
