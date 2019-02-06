@@ -139,7 +139,7 @@ class RequestInterpolation extends BaseInterpolation
     /**
      * @return mixed
      */
-    protected function getUser(): string
+    protected function getUser(): ?string
     {
         if (!is_null($this->request->user()) && !is_null($this->request->user()->email)) {
             return $this->request->user()->email;

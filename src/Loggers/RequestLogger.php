@@ -20,23 +20,11 @@ class RequestLogger implements LoggerInterface
      */
     public function __construct()
     {
-//        $this->monolog = clone app('log')->getMonolog();
-//        if (config('advanced-logger.request.enabled') && $handlers = config('advanced-logger.request.handlers')) {
-//            if (count($handlers)) {
-//                //Remove default laravel handler
-//                $this->monolog->popHandler();
-//                foreach ($handlers as $handler) {
-//                    if (class_exists($handler)) {
-//                        $this->monolog->pushHandler(app($handler));
-//                    } else {
-//                        throw new RuntimeException("Handler class [{$handler}] does not exist");
-//                    }
-//                }
-//            }
-//        }
-
-
-        $this->monolog = app('log')->driver()->getLogger();
+        if (version_compare(app()->version(), "5.5.99", "<=")) {
+            $this->monolog = clone app('log')->getMonolog();
+        } else {
+            $this->monolog = app('log')->driver()->getLogger();
+        }
         if (config('advanced-logger.request.enabled') && $handlers = config('advanced-logger.request.handlers')) {
             if (count($handlers)) {
                 //Remove default laravel handler
