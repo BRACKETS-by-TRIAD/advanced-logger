@@ -20,7 +20,7 @@ class RequestLogger implements LoggerInterface
      */
     public function __construct()
     {
-        if (version_compare(app()->version(), "5.5.99", "<=")) {
+        if (version_compare(app()->version(), '5.5.99', '<=')) {
             $this->monolog = clone app('log')->getMonolog();
         } else {
             $this->monolog = app('log')->driver()->getLogger();
