@@ -34,7 +34,7 @@ class AdvancedLoggerServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Benchmark::start('application');
+        Benchmark::start(config('advanced-logger.request.benchmark', 'application'));
         $this->mergeConfigFrom(__DIR__ . '/../config/advanced-logger.php', 'advanced-logger');
     }
 }

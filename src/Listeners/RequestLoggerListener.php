@@ -5,6 +5,9 @@ namespace Brackets\AdvancedLogger\Listeners;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
+/**
+ * Class RequestLoggerListener
+ */
 class RequestLoggerListener
 {
     /**

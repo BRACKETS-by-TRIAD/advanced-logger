@@ -56,5 +56,11 @@ return [
          */
         
         'queue' => null,
+
+        /*
+         * Benchmark name used for request log
+         */
+
+        'benchmark' => 'application',
     ],
 ];

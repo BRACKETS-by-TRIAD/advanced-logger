@@ -1,1 +1,3 @@
 # Advanced Logger
+
+TODO: finish

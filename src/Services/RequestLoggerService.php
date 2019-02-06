@@ -8,6 +8,9 @@ use Brackets\AdvancedLogger\Loggers\RequestLogger;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class RequestLoggerService
+ */
 class RequestLoggerService
 {
     /**
@@ -39,7 +42,7 @@ class RequestLoggerService
     protected $logger;
 
     /**
-     * AdvancedLogger constructor.
+     * RequestLoggerService constructor.
      *
      * @param RequestLogger $logger
      * @param RequestInterpolation $requestInterpolation

@@ -5,7 +5,7 @@ namespace Brackets\AdvancedLogger\Interpolations;
 use Brackets\AdvancedLogger\Services\Benchmark;
 
 /**
- * Class RequestInterpolation
+ * Class ResponseInterpolation
  */
 class ResponseInterpolation extends BaseInterpolation
 {
@@ -104,7 +104,7 @@ class ResponseInterpolation extends BaseInterpolation
     protected function getResponseTime(): ?string
     {
         try {
-            return (string)Benchmark::duration('application');
+            return (string)Benchmark::duration(config('advanced-logger.request.benchmark', 'application'));
         } catch (\Exception $e) {
             return null;
         }
@@ -118,7 +118,7 @@ class ResponseInterpolation extends BaseInterpolation
     protected function getRequestHash(): ?string
     {
         try {
-            return Benchmark::hash('application');
+            return Benchmark::hash(config('advanced-logger.request.benchmark', 'application'));
         } catch (\Exception $e) {
             return null;
         }

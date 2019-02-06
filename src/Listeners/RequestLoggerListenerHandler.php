@@ -8,6 +8,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Request;
 
+/**
+ * Class RequestLoggerListenerHandler
+ */
 class RequestLoggerListenerHandler
 {
     use DispatchesJobs;
@@ -18,7 +21,7 @@ class RequestLoggerListenerHandler
      */
     public function handle(RequestHandled $event): void
     {
-        Benchmark::end('application');
+        Benchmark::end(config('advanced-logger.request.benchmark', 'application'));
 
         if (!$this->excluded($event->request)) {
             $task = app(RequestLogJob::class, ['request' => $event->request, 'response' => $event->response]);

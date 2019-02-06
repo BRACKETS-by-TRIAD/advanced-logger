@@ -26,9 +26,9 @@ abstract class TestCase extends Orchestra
      */
     protected function tearDown()
     {
-//        if(file_exists($this->getRequestLogFileName())) {
-//            unlink($this->getRequestLogFileName());
-//        }
+        if (file_exists($this->getRequestLogFileName())) {
+            unlink($this->getRequestLogFileName());
+        }
         parent::tearDown();
     }
 
@@ -37,10 +37,10 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
-        if(file_exists($this->getRequestLogFileName())) {
+        if (file_exists($this->getRequestLogFileName())) {
             unlink($this->getRequestLogFileName());
         }
-        $app['config']->set('advanced-logger.request.file', $this->getFixturesDirectory('requests.log'));
+        $app['config']->set('advanced-logger.request.file', $this->getFixturesDirectory('request.log'));
         $app['config']->set('advanced-logger.request.excluded-paths', ['excluded']);
 
         Route::get('/', function () {
@@ -52,14 +52,21 @@ abstract class TestCase extends Orchestra
         });
     }
 
+    /**
+     * @param string $path
+     * @return string
+     */
     public function getFixturesDirectory(string $path): string
     {
         return __DIR__ . "/fixtures/{$path}";
     }
 
-    public function getRequestLogFileName()
+    /**
+     * @return string
+     */
+    public function getRequestLogFileName(): string
     {
-        return $this->getFixturesDirectory('requests-' . Carbon::now()->format('Y-m-d') . '.log');
+        return $this->getFixturesDirectory('request-' . Carbon::now()->format('Y-m-d') . '.log');
     }
 
     /**
@@ -67,7 +74,7 @@ abstract class TestCase extends Orchestra
      *
      * @return array
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             AdvancedLoggerServiceProvider::class,
