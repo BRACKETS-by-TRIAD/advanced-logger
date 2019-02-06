@@ -3,7 +3,7 @@
     "description": "Advanced logger",
     "keywords": [
         "logger",
-        "request logger",
+        "request logger"
     ],
     "license": "MIT",
     "type": "project",
