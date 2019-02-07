@@ -22,7 +22,7 @@ class Benchmark
     {
         $start = microtime(true);
         static::$timers[$name] = [
-            'hash' => sha1(time()),
+            'hash' => self::generateRandomHash(),
             'start' => $start,
         ];
         return $start;
@@ -66,5 +66,17 @@ class Benchmark
             return static::$timers[$name]['hash'];
         }
         throw new RuntimeException("Benchmark '{$name}' not started");
+    }
+
+    /**
+     * @return bool|string
+     */
+    public static function generateRandomHash()
+    {
+        try {
+            return substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(32))), 0, 10);
+        } catch (\Exception $e) {
+            return substr(sha1(time()), 0, 10);
+        }
     }
 }
