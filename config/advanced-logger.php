@@ -33,12 +33,12 @@ return [
         /*
          * Format of the log message, allowed values are:
          *
-         * full - 'HTTP/{http-version} {status} | {remote-addr} | {user} | {method} {url} {query} | {response-time} ms | {user-agent} | {referer}',
+         * full - 'HTTP/{http-version} {status} | {remote-addr} | {user} | {method} {url} {query} | {response-time} s | {user-agent} | {referer}',
          * combined - '{remote-addr} - {remote-user} [{date}] "{method} {url} HTTP/{http-version}" {status} {content-length} "{referer}" "{user-agent}"',
          * common - '{remote-addr} - {remote-user} [{date}] "{method} {url} HTTP/{http-version}" {status} {content-length}',
-         * dev - '{method} {url} {status} {response-time} ms - {content-length}',
-         * short - '{remote-addr} {remote-user} {method} {url} HTTP/{http-version} {status} {content-length} - {response-time} ms',
-         * tiny - '{method} {url} {status} {content-length} - {response-time} ms'
+         * dev - '{method} {url} {status} {response-time} s - {content-length}',
+         * short - '{remote-addr} {remote-user} {method} {url} HTTP/{http-version} {status} {content-length} - {response-time} s',
+         * tiny - '{method} {url} {status} {content-length} - {response-time} s'
          */
 
         'format' => 'full',
