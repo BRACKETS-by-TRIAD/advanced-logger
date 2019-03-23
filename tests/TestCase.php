@@ -14,7 +14,7 @@ abstract class TestCase extends Orchestra
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -24,7 +24,7 @@ abstract class TestCase extends Orchestra
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->getRequestLogFileName())) {
             unlink($this->getRequestLogFileName());
