@@ -21,8 +21,22 @@ class LineWithHashFormatter extends LineFormatter
         $output = parent::format($record);
         if (false !== strpos($output, '%' . self::KEY . '%')) {
             $output = str_replace('%' . self::KEY . '%',
-                $this->stringify(Benchmark::hash(config('advanced-logger.request.benchmark', 'application'))), $output);
+                $this->stringify($this->getRequestHash()), $output);
         }
         return $output;
+    }
+    
+    /**
+     * Get request hash
+     *
+     * @return string|null
+     */
+    protected function getRequestHash(): ?string
+    {
+        try {
+            return Benchmark::hash(config('advanced-logger.request.benchmark', 'application'));
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }

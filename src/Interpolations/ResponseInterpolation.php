@@ -111,7 +111,7 @@ class ResponseInterpolation extends BaseInterpolation
     }
 
     /**
-     * Get response time
+     * Get request hash
      *
      * @return string|null
      */
