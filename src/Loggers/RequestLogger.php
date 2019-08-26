@@ -42,11 +42,11 @@ class RequestLogger implements LoggerInterface
     /**
      * Log an alert message to the logs.
      *
-     * @param  string $message
-     * @param  array $context
+     * @param string $message
+     * @param array $context
      * @return void
      */
-    public function alert($message, array $context = array())
+    public function alert($message, array $context = [])
     {
         $this->monolog->alert($message, $context);
     }
@@ -54,11 +54,11 @@ class RequestLogger implements LoggerInterface
     /**
      * Log a critical message to the logs.
      *
-     * @param  string $message
-     * @param  array $context
+     * @param string $message
+     * @param array $context
      * @return void
      */
-    public function critical($message, array $context = array())
+    public function critical($message, array $context = [])
     {
         $this->monolog->critical($message, $context);
     }
@@ -66,11 +66,11 @@ class RequestLogger implements LoggerInterface
     /**
      * Log an error message to the logs.
      *
-     * @param  string $message
-     * @param  array $context
+     * @param string $message
+     * @param array $context
      * @return void
      */
-    public function error($message, array $context = array())
+    public function error($message, array $context = [])
     {
         $this->monolog->error($message, $context);
     }
@@ -78,11 +78,11 @@ class RequestLogger implements LoggerInterface
     /**
      * Log a warning message to the logs.
      *
-     * @param  string $message
-     * @param  array $context
+     * @param string $message
+     * @param array $context
      * @return void
      */
-    public function warning($message, array $context = array())
+    public function warning($message, array $context = [])
     {
         $this->monolog->warning($message, $context);
     }
@@ -90,11 +90,11 @@ class RequestLogger implements LoggerInterface
     /**
      * Log a notice to the logs.
      *
-     * @param  string $message
-     * @param  array $context
+     * @param string $message
+     * @param array $context
      * @return void
      */
-    public function notice($message, array $context = array())
+    public function notice($message, array $context = [])
     {
         $this->monolog->notice($message, $context);
     }
@@ -102,11 +102,11 @@ class RequestLogger implements LoggerInterface
     /**
      * Log an informational message to the logs.
      *
-     * @param  string $message
-     * @param  array $context
+     * @param string $message
+     * @param array $context
      * @return void
      */
-    public function info($message, array $context = array())
+    public function info($message, array $context = [])
     {
         $this->monolog->info($message, $context);
     }
@@ -114,11 +114,11 @@ class RequestLogger implements LoggerInterface
     /**
      * Log a debug message to the logs.
      *
-     * @param  string $message
-     * @param  array $context
+     * @param string $message
+     * @param array $context
      * @return void
      */
-    public function debug($message, array $context = array())
+    public function debug($message, array $context = [])
     {
         $this->monolog->debug($message, $context);
     }
@@ -131,7 +131,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function emergency($message, array $context = array())
+    public function emergency($message, array $context = [])
     {
         $this->monolog->emergency($message, $context);
     }
@@ -139,12 +139,12 @@ class RequestLogger implements LoggerInterface
     /**
      * Log a message to the logs.
      *
-     * @param  string $level
-     * @param  string $message
-     * @param  array $context
+     * @param string $level
+     * @param string $message
+     * @param array $context
      * @return void
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         $this->monolog->log($level, $message, $context);
     }
@@ -152,8 +152,8 @@ class RequestLogger implements LoggerInterface
     /**
      * Register a file log handler.
      *
-     * @param  string $path
-     * @param  string $level
+     * @param string $path
+     * @param string $level
      * @return void
      */
     public function useFiles($path, $level = 'debug')
@@ -163,9 +163,9 @@ class RequestLogger implements LoggerInterface
     /**
      * Register a daily file log handler.
      *
-     * @param  string $path
-     * @param  int $days
-     * @param  string $level
+     * @param string $path
+     * @param int $days
+     * @param string $level
      * @return void
      */
     public function useDailyFiles($path, $days = 0, $level = 'debug')

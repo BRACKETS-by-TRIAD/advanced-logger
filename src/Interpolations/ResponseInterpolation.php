@@ -65,7 +65,7 @@ class ResponseInterpolation extends BaseInterpolation
             switch (strtolower($var)) {
                 case 'res':
                     return $this->convertToString($this->response->headers->get($option));
-                default;
+                default:
                     return $raw;
             }
         }
