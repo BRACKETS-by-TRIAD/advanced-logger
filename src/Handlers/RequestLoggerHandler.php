@@ -28,8 +28,10 @@ class RequestLoggerHandler extends RotatingFileHandler
         $filePermission = null,
         $useLocking = false
     ) {
-        $filename = !is_null($filename) ? $filename : config('advanced-logger.request.file',
-            storage_path('logs/request.log'));
+        $filename = !is_null($filename) ? $filename : config(
+            'advanced-logger.request.file',
+            storage_path('logs/request.log')
+        );
         parent::__construct($filename, $maxFiles, $level, $bubble, $filePermission, $useLocking);
     }
 }

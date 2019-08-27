@@ -12,14 +12,16 @@ class HashLogCustomizer
     /**
      * Customize the given logger instance.
      *
-     * @param  \Illuminate\Log\Logger $logger
+     * @param \Illuminate\Log\Logger $logger
      * @return void
      */
     public function __invoke($logger)
     {
         foreach ($logger->getHandlers() as $handler) {
-            $handler->setFormatter(app(LineWithHashFormatter::class,
-                ['format' => "[%datetime%] %hash% %channel%.%level_name%: %message% %context% %extra%\n"]));
+            $handler->setFormatter(app(
+                LineWithHashFormatter::class,
+                ['format' => "[%datetime%] %hash% %channel%.%level_name%: %message% %context% %extra%\n"]
+            ));
         }
     }
 }

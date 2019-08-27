@@ -20,8 +20,11 @@ class LineWithHashFormatter extends LineFormatter
     {
         $output = parent::format($record);
         if (false !== strpos($output, '%' . self::KEY . '%')) {
-            $output = str_replace('%' . self::KEY . '%',
-                $this->stringify($this->getRequestHash()), $output);
+            $output = str_replace(
+                '%' . self::KEY . '%',
+                $this->stringify($this->getRequestHash()),
+                $output
+            );
         }
         return $output;
     }

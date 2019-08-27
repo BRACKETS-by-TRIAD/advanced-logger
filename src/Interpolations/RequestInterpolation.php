@@ -110,7 +110,7 @@ class RequestInterpolation extends BaseInterpolation
                     return $this->convertToString($this->request->header(strtolower($option)));
                 case 'server':
                     return $this->convertToString($this->request->server($option));
-                default;
+                default:
                     return $raw;
             }
         }
