@@ -19,7 +19,7 @@
         "php": "^7.2",
         "illuminate/support": "~6.0",
         "illuminate/http": "~6.0",
-        "monolog/monolog": "~1.11",
+        "monolog/monolog": "^1.12|^2.0",
         "ext-json": "*"
     },
     "require-dev": {
