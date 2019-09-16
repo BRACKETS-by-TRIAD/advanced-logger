@@ -3,6 +3,7 @@
 namespace Brackets\AdvancedLogger\Interpolations;
 
 use Brackets\AdvancedLogger\Services\Benchmark;
+use Illuminate\Support\Str;
 
 /**
  * Class ResponseInterpolation
@@ -48,7 +49,7 @@ class ResponseInterpolation extends BaseInterpolation
             'getStatusCode',
             'getResponseTime',
             'getRequestHash',
-        ], camel_case($variable));
+        ], Str::camel($variable));
 
         if (method_exists($this, $method)) {
             return $this->convertToString($this->$method());

@@ -3,6 +3,7 @@
 namespace Brackets\AdvancedLogger\Interpolations;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 /**
  * Class RequestInterpolation
@@ -54,7 +55,7 @@ class RequestInterpolation extends BaseInterpolation
             'getContent',
             'getQuery',
             'getUser',
-        ], camel_case($variable));
+        ], Str::camel($variable));
 
         $serverVariable = str_replace([
             'ACCEPT',

@@ -12,8 +12,8 @@ class RequestLoggerTest extends TestCase
     {
         $response = $this->get('/');
         $response->assertStatus(200);
-        $this->assertContains('127.0.0.1', file_get_contents($this->getRequestLogFileName()));
-        $this->assertContains(' GET http://localhost', file_get_contents($this->getRequestLogFileName()));
+        $this->assertStringContainsString('127.0.0.1', file_get_contents($this->getRequestLogFileName()));
+        $this->assertStringContainsString(' GET http://localhost', file_get_contents($this->getRequestLogFileName()));
     }
 
     /** @test */

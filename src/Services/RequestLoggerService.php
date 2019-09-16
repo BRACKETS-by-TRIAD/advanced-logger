@@ -7,6 +7,7 @@ use Brackets\AdvancedLogger\Interpolations\ResponseInterpolation;
 use Brackets\AdvancedLogger\Loggers\RequestLogger;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Arr;
 
 /**
  * Class RequestLoggerService
@@ -70,7 +71,7 @@ class RequestLoggerService
 
         if (config('advanced-logger.request.enabled')) {
             $format = config('advanced-logger.request.format', 'full');
-            $format = array_get($this->formats, $format, $format);
+            $format = Arr::get($this->formats, $format, $format);
 
             $message = $this->responseInterpolation->interpolate($format);
             $message = $this->requestInterpolation->interpolate($message);
