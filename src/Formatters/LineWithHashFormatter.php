@@ -16,7 +16,7 @@ class LineWithHashFormatter extends LineFormatter
      * @param array $record
      * @return array|mixed|string|string[]|void|null
      */
-    public function format(array $record)
+    public function format(array $record): string
     {
         $output = parent::format($record);
         if (false !== strpos($output, '%' . self::KEY . '%')) {
@@ -28,7 +28,7 @@ class LineWithHashFormatter extends LineFormatter
         }
         return $output;
     }
-    
+
     /**
      * Get request hash
      *
