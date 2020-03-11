@@ -23,7 +23,7 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "laravel/framework": "~7.0",
+        "laravel/framework": "6.*|7.*",
         "phpunit/phpunit": "^8.5",
         "orchestra/testbench": "~4.0"
     },
