@@ -8,7 +8,7 @@ This package has been inspired by package https://github.com/andersao/laravel-re
 
 ### Composer
 
-Run `composer require brackets/advamnced-logger` in your terminal.
+Run `composer require brackets/advanced-logger` in your terminal.
 
 ### Laravel
 
