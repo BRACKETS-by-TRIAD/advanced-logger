@@ -21,7 +21,7 @@ class RequestLoggerTest extends TestCase
     {
         $response = $this->get('/excluded');
         $response->assertStatus(200);
-        $this->assertFileNotExists($this->getRequestLogFileName());
+        $this->assertFileDoesNotExist($this->getRequestLogFileName());
         //We are deleting request file, so there should not be a file
 //        $this->assertNotContains(' GET http://localhost/excluded', file_get_contents($this->getRequestLogFileName()));
     }
