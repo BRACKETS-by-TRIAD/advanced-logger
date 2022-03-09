@@ -46,7 +46,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function alert($message, array $context = [])
+    public function alert(string|\Stringable $message, array $context = []): void
     {
         $this->monolog->alert($message, $context);
     }
@@ -58,7 +58,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function critical($message, array $context = [])
+    public function critical(string|\Stringable $message, array $context = []): void
     {
         $this->monolog->critical($message, $context);
     }
@@ -70,7 +70,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function error($message, array $context = [])
+    public function error(string|\Stringable $message, array $context = []): void
     {
         $this->monolog->error($message, $context);
     }
@@ -82,7 +82,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function warning($message, array $context = [])
+    public function warning(string|\Stringable $message, array $context = []): void
     {
         $this->monolog->warning($message, $context);
     }
@@ -94,7 +94,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function notice($message, array $context = [])
+    public function notice(string|\Stringable $message, array $context = []): void
     {
         $this->monolog->notice($message, $context);
     }
@@ -106,7 +106,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function info($message, array $context = [])
+    public function info(string|\Stringable $message, array $context = []): void
     {
         $this->monolog->info($message, $context);
     }
@@ -118,7 +118,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function debug($message, array $context = [])
+    public function debug(string|\Stringable $message, array $context = []): void
     {
         $this->monolog->debug($message, $context);
     }
@@ -131,7 +131,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function emergency($message, array $context = [])
+    public function emergency(string|\Stringable $message, array $context = []): void
     {
         $this->monolog->emergency($message, $context);
     }
@@ -144,7 +144,7 @@ class RequestLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, string|\Stringable $message, array $context = []): void
     {
         $this->monolog->log($level, $message, $context);
     }
