@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.0",
         "illuminate/support": "^9.0",
         "illuminate/http": "^9.0",
         "monolog/monolog": "^1.12|^2.0",
