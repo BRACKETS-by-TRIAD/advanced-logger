@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
+    protected array $listen = [
 
     ];
 
@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $subscribe = [
+    protected array $subscribe = [
         \Brackets\AdvancedLogger\Listeners\RequestLoggerListener::class,
     ];
 }

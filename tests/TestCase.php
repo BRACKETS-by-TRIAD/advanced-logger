@@ -35,7 +35,7 @@ abstract class TestCase extends Orchestra
     /**
      * @param \Illuminate\Foundation\Application $app
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp(\Illuminate\Foundation\Application $app): void
     {
         if (file_exists($this->getRequestLogFileName())) {
             unlink($this->getRequestLogFileName());
@@ -74,7 +74,7 @@ abstract class TestCase extends Orchestra
      *
      * @return array
      */
-    protected function getPackageProviders($app): array
+    protected function getPackageProviders(\Illuminate\Foundation\Application $app): array
     {
         return [
             AdvancedLoggerServiceProvider::class,

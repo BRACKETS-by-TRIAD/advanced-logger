@@ -19,7 +19,7 @@ class LineWithHashFormatter extends LineFormatter
     public function format(array $record): string
     {
         $output = parent::format($record);
-        if (false !== strpos($output, '%' . self::KEY . '%')) {
+        if (str_contains($output, '%' . self::KEY . '%')) {
             $output = str_replace(
                 '%' . self::KEY . '%',
                 $this->stringify($this->getRequestHash()),
