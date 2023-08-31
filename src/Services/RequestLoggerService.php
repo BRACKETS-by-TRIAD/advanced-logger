@@ -21,7 +21,7 @@ class RequestLoggerService
     /**
      * @var array
      */
-    protected $formats = [
+    protected array $formats = [
         'full' => '{request-hash} | HTTP/{http-version} {status} | {remote-addr} | {user} | {method} {url} {query} | {response-time} s | {user-agent} | {referer}',
         'combined' => '{remote-addr} - {remote-user} [{date}] "{method} {url} HTTP/{http-version}" {status} {content-length} "{referer}" "{user-agent}"',
         'common' => '{remote-addr} - {remote-user} [{date}] "{method} {url} HTTP/{http-version}" {status} {content-length}',
@@ -32,15 +32,15 @@ class RequestLoggerService
     /**
      * @var RequestInterpolation
      */
-    protected $requestInterpolation;
+    protected RequestInterpolation $requestInterpolation;
     /**
      * @var ResponseInterpolation
      */
-    protected $responseInterpolation;
+    protected ResponseInterpolation $responseInterpolation;
     /**
      * @var RequestLogger
      */
-    protected $logger;
+    protected RequestLogger $logger;
 
     /**
      * RequestLoggerService constructor.

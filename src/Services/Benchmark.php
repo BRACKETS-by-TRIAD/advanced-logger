@@ -12,13 +12,13 @@ class Benchmark
     /**
      * @var array
      */
-    protected static $timers = [];
+    protected static array $timers = [];
 
     /**
      * @param string $name
      * @return mixed
      */
-    public static function start(string $name)
+    public static function start(string $name): mixed
     {
         $start = microtime(true);
         static::$timers[$name] = [
@@ -71,7 +71,7 @@ class Benchmark
     /**
      * @return bool|string
      */
-    public static function generateRandomHash()
+    public static function generateRandomHash(): string
     {
         try {
             return substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(32))), 0, 10);

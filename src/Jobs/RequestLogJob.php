@@ -17,14 +17,16 @@ use Symfony\Component\HttpFoundation\Response;
 class RequestLogJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * @var Request
      */
-    protected $request;
+
+    protected Request $request;
     /**
      * @var Response
      */
-    protected $response;
+    protected Response $response;
 
     /**
      * RequestLogJob constructor.

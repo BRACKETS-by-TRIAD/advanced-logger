@@ -3,6 +3,7 @@
 namespace Brackets\AdvancedLogger\LogCustomizers;
 
 use Brackets\AdvancedLogger\Formatters\LineWithHashFormatter;
+use \Illuminate\Log\Logger;
 
 /**
  * Class HashLogCustomizer
@@ -12,10 +13,10 @@ class HashLogCustomizer
     /**
      * Customize the given logger instance.
      *
-     * @param \Illuminate\Log\Logger $logger
+     * @param Logger $logger
      * @return void
      */
-    public function __invoke($logger)
+    public function __invoke(Logger $logger): void
     {
         foreach ($logger->getHandlers() as $handler) {
             $handler->setFormatter(app(

@@ -35,7 +35,7 @@ abstract class TestCase extends Orchestra
     /**
      * @param \Illuminate\Foundation\Application $app
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         if (file_exists($this->getRequestLogFileName())) {
             unlink($this->getRequestLogFileName());

@@ -16,16 +16,16 @@
         }
     ],
     "require": {
-        "php": "^8.0.2",
-        "illuminate/support": "^9.0",
-        "illuminate/http": "^9.0",
-        "monolog/monolog": "^1.12|^2.0",
+        "php": "^8.0|^8.1",
+        "illuminate/support": "^9.0|^10.0",
+        "illuminate/http": "^9.0|^10.0",
+        "monolog/monolog": "^2.9|^3.3",
         "ext-json": "*"
     },
     "require-dev": {
-        "laravel/framework": "^9.0",
-        "phpunit/phpunit": "^8.5|^9.0",
-        "orchestra/testbench": "~7.0"
+        "laravel/framework": "^9.0|^10.0",
+        "phpunit/phpunit": "^9.5|^10.0",
+        "orchestra/testbench": "~8.0"
     },
     "autoload": {
         "classmap": [],
